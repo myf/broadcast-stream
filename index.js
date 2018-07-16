@@ -4,6 +4,7 @@
 var udp = require('dgram')
 var pipe = require('stream').prototype.pipe
 var os = require('os')
+var getLinkLocal =require('./getLinkLocal')
 
 module.exports = function (port, loopback, family='IPv4') {
   const { type, broadcastAddress, localBind, broadcast } = {
@@ -31,7 +32,7 @@ module.exports = function (port, loopback, family='IPv4') {
     if ('string' === typeof message) {
       message = new Buffer(message, 'utf8')
     }
-    const iface = 'en0'
+    const iface = getLinkLocal('wireless');
     let address = family === 'IPv4' ? broadcastAddress : `${broadcastAddress}%${iface}`
     socket.send(message, 0, message.length, port, address)
     return true

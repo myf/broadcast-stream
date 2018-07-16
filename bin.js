@@ -4,7 +4,7 @@ var createUdpStream = require('./')
 
 var port = (+process.argv[2]) || 8999
 
-var stream = createUdpStream(port)
+var stream = createUdpStream(port, true, family='IPv6')
 
 stream.on('data', function (message) {
   console.error(message.toString())
